@@ -40,10 +40,11 @@
         });
 
         function randomizeElement(e) {
+            const ratio = 0.6453125;
             const { innerHeight, innerWidth } = window;
-            const width = randomInt(innerWidth * 0.5, 1);
-            const height = width * 413 / 640;
-            const translateX = randomInt(innerWidth -width);
+            const width = randomInt(Math.min(innerWidth * .5, innerHeight * (1 + ratio) * 0.5), 8);
+            const height = width * ratio;
+            const translateX = randomInt(innerWidth - width);
             const translateY = randomInt(innerHeight - height);
 
             e.style.width = `${width}px`;
@@ -51,11 +52,11 @@
             e.style.transform = `translate(${translateX}px, ${translateY}px)`;
             e.style.fill = `#${randomInt(16777215).toString(16)}`;
 
-            setTimeout(() => randomizeElement(e), randomInt(5000));
+            setTimeout(() => randomizeElement(e), randomInt(5000, 100));
         }
 
-        function randomInt(end, start = 0) {
-            return Math.floor(Math.random() * end % end) + start;
+        function randomInt(max, min = 0) {
+            return Math.floor(Math.random() * (max - min + 1) + min);
         }
     </script>
 </body>
